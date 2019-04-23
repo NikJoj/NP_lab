@@ -27,13 +27,13 @@ elif (choice == 2):
 
 while True:
 	packet = s.recvfrom(65565)
-	#packet string from tuple
+
 	packet = packet[0]
 	
 	#take first 20 characters for the ip header
 	ip_header = packet[0:20]
 	
-	#now unpack them :)
+	#unpacking
 	iph = unpack('!BBHHHBBH4s4s' , ip_header)
 	
 	version_ihl = iph[0]
@@ -49,16 +49,13 @@ while True:
 	
 	if (choice == 2):
 		print "---------------------------UDP---------------------------------"
-		print 'Version : ' + str(version) 
 		print 'IP Header Length : ' + str(ihl)
-		print 'TTL : ' + str(ttl) 
 		print 'Protocol : ' + str(protocol) 
 		print 'Source Address : ' + str(s_addr) 
 		print 'Destination Address : ' + str(d_addr)
 		
 		udp_header = packet[iph_length:iph_length+20]
 		
-		#now unpack them :)
 		udph = unpack('!HHLLBBHHH' , udp_header)
 		
 		source_port = udph[0]
@@ -71,7 +68,6 @@ while True:
 		print 'Source Port : ' + str(source_port) 
 		print 'Destination Port : ' + str(dest_port)  
 		print 'Sequence Number : ' + str(sequence)  
-		print 'Acknowledgement : ' + str(acknowledgement)  
 		print 'UDP header length : ' + str(udph_length)
 		
 		h_size = iph_length + udph_length * 4
@@ -81,7 +77,7 @@ while True:
 		data = packet[h_size:]
 		
 		print 'Data : ' + data
-		# print
+		
 
 	if (choice == 1):
 		print "---------------------------TCP---------------------------------"
@@ -94,7 +90,6 @@ while True:
 		
 		tcp_header = packet[iph_length:iph_length+20]
 		
-		#now unpack them :)
 		tcph = unpack('!HHLLBBHHH' , tcp_header)
 		
 		source_port = tcph[0]
@@ -117,4 +112,3 @@ while True:
 		data = packet[h_size:]
 		
 		print 'Data : ' + data
-		# print
